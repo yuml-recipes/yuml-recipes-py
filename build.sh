@@ -13,4 +13,7 @@ flake8 yuml tests --count --exit-zero --max-complexity=10 --max-line-length=180 
 echo "Run tests ..."
 pytest
 
+echo "Make wheel ..."
+python setup.py bdist_wheel
+
 echo "All is well!"
