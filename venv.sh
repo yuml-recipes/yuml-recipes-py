@@ -22,6 +22,7 @@ pip install twine
 
 pip install pytest
 pip install pytest-runner
+pip install flake8
 
 echo "Updating requirements ..."
 pip install -r requirements.txt
