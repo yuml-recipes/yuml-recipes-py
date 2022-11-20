@@ -1,4 +1,4 @@
-# models.py
+# test_reader.py
 #
 # Copyright 2022 Patrick Eschenbach
 #
@@ -17,35 +17,12 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from dataclasses import dataclass
-from typing import List
+import yuml
 
-
-@dataclass
-class Quantity:
-    text: str
-
-
-@dataclass
-class Ingredient:
-    text: str
-    quantity: List[str]
-
-
-@dataclass
-class Step:
-    text: str
-
-
-@dataclass
-class Variant:
-    text: str
-
-
-@dataclass
-class Recipe:
-    quantities: List[Quantity]
-    ingredients: List[Ingredient]
-    steps: List[Step]
-    variants: List[Variant]
-    images: List[str]
+def test_recipes():
+    recipe = yuml.recipe_from_file('data/Chili con Carne.yuml')
+    assert len(recipe.quantities) == 1
+    assert len(recipe.ingredients) == 11
+    assert len(recipe.steps) == 11
+    assert len(recipe.variants) == 2
+    assert len(recipe.images) == 1

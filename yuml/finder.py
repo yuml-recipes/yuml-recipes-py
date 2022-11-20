@@ -1,4 +1,4 @@
-# test_reader.py
+# finder.py
 #
 # Copyright 2022 Patrick Eschenbach
 #
@@ -17,11 +17,23 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import yuml
+import os
+from typing import List
 
-def test_reader():
-    recipe: yuml.Recipe = yuml.recipe_from_file('data/Chili con Carne.yuml')
-    assert len(recipe.quantities) == 1
-    assert len(recipe.ingredients) == 11
-    assert len(recipe.steps) == 11
-    assert len(recipe.variants) == 2
+valid_file_endings = ['.jpg', '.jpeg', '.png']
+
+
+def is_file(dir_path: str, child_name: str) -> bool:
+    return os.path.isfile(os.path.join(dir_path, child_name))
+
+
+def has_matching_name(recipe_name: str, filename: str) -> bool:
+    name, extension = os.path.splitext(filename)
+    return extension.lower() in valid_file_endings and name.startswith(recipe_name)
+
+
+def find_images(file_path: str) -> List[str]:
+    recipe_name, _ = os.path.splitext(os.path.basename(file_path))
+    dir_path = os.path.dirname(file_path)
+    children = os.listdir(dir_path)
+    return [child for child in children if is_file(dir_path, child) and has_matching_name(recipe_name, child)]

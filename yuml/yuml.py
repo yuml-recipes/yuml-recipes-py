@@ -18,40 +18,28 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import yaml
-from typing import Any, List
-from yuml.models import *
+from yuml.finder import find_images
+from yuml.models import Recipe
+from yuml.reader import read_quantities, read_ingredients, read_steps, read_variants
 
-def read(data: dict, key: str) -> Any:
-    if key in data:
-        value = data.get(key)
-        if value:
-            return value
-    raise Exception(f"ERROR: Missing or empty property for key '{key}' ...")
 
-def read_quantities(data: dict) -> List[Quantity]:
-    quantities_data = read(data, 'quantities')
-    return [Quantity(text=text) for text in quantities_data]
+class YumlException(Exception):
+    """ The only exception type allowed to be thrown to consumer code. """
 
-def read_ingredients(data: dict) -> List[Ingredient]:
-    ingredients_data = read(data, 'ingredients')
-    ingredients = []
-    for entry in ingredients_data:
-        ingredients.extend([Ingredient(text=text, quantity=quantity) for text, quantity in entry.items()])
-    return ingredients
 
-def read_steps(data: dict) -> List[Step]:
-    steps_data = read(data, 'steps')
-    return [Step(text=text) for text in steps_data]
+def read_yuml(file_path: str) -> dict:
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
 
-def read_variants(data: dict) -> List[Variant]:
-    variants_data = read(data, 'variants')
-    return [Variant(text=text) for text in variants_data]
 
 def recipe_from_file(file_path: str) -> Recipe:
-    with open(file_path, 'r') as file:
-        recipe_data: dict = yaml.safe_load(file)
-    quantities = read_quantities(recipe_data)
-    ingredients = read_ingredients(recipe_data)
-    steps = read_steps(recipe_data)
-    variants = read_variants(recipe_data)
-    return Recipe(quantities=quantities, ingredients=ingredients, steps=steps, variants=variants)
+    try:
+        data = read_yuml(file_path)
+        quantities = read_quantities(data)
+        ingredients = read_ingredients(data)
+        steps = read_steps(data)
+        variants = read_variants(data)
+        images = find_images(file_path)
+        return Recipe(quantities=quantities, ingredients=ingredients, steps=steps, variants=variants, images=images)
+    except Exception as e:
+        raise YumlException(f'Encountered error while reading {file_path}.') from e

@@ -17,5 +17,5 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from yuml.yuml import recipe_from_file
-from yuml.models import *
+from yuml.yuml import recipe_from_file, YumlException  # noqa: F401
+from yuml.models import Recipe, Quantity, Ingredient, Step, Variant  # noqa: F401
