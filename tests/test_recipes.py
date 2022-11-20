@@ -1,4 +1,4 @@
-# test_reader.py
+# test_recipes.py
 #
 # Copyright 2022 Patrick Eschenbach
 #
@@ -17,12 +17,39 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import pytest
 import yuml
+from yaml.parser import ParserError
 
-def test_recipes():
+
+def test_reference_recipe():
     recipe = yuml.recipe_from_file('data/Chili con Carne.yuml')
+
     assert len(recipe.quantities) == 1
     assert len(recipe.ingredients) == 11
     assert len(recipe.steps) == 11
     assert len(recipe.variants) == 2
     assert len(recipe.images) == 1
+
+    assert recipe.ingredients[1].text == 'Rote Chilischoten'
+    assert recipe.ingredients[1].quantity == '2 große'
+
+    assert recipe.ingredients[5].text == 'Tomaten'
+    assert recipe.ingredients[5].quantity == '3 Dosen (400g Füllmenge)'
+
+    assert recipe.ingredients[10].text == 'Salz und Pfeffer'
+    assert recipe.ingredients[10].quantity is None
+
+
+def test_syntax_exception_recipe():
+    with pytest.raises(yuml.YumlException) as exc_info:
+        _ = yuml.recipe_from_file('data/parser_error.yuml')
+    exception_raised = exc_info.value
+    assert type(exception_raised.__cause__) == ParserError
+
+
+def test_missing_section_recipe():
+    with pytest.raises(yuml.YumlException) as exc_info:
+        _ = yuml.recipe_from_file('data/missing_ingredients.yuml')
+    exception_raised = exc_info.value
+    assert str(exception_raised.__cause__) == "Missing or empty property for key 'ingredients' ..."

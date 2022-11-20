@@ -9,4 +9,3 @@ setup(
     license='GPL-3.0',
     install_requires=['yaml'],
 )
-
