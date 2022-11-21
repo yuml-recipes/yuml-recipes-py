@@ -22,7 +22,7 @@ from typing import List
 
 
 @dataclass
-class Quantity:
+class Serving:
     text: str
 
 
@@ -44,7 +44,7 @@ class Variant:
 
 @dataclass
 class Recipe:
-    quantities: List[Quantity]
+    servings: List[Serving]
     ingredients: List[Ingredient]
     steps: List[Step]
     variants: List[Variant]

@@ -20,7 +20,7 @@
 import yaml
 from yuml.finder import find_images
 from yuml.models import Recipe
-from yuml.reader import read_quantities, read_ingredients, read_steps, read_variants
+from yuml.reader import read_servings, read_ingredients, read_steps, read_variants
 
 
 class YumlException(Exception):
@@ -35,11 +35,11 @@ def read_yuml(file_path: str) -> dict:
 def recipe_from_file(file_path: str) -> Recipe:
     try:
         data = read_yuml(file_path)
-        quantities = read_quantities(data)
+        servings = read_servings(data)
         ingredients = read_ingredients(data)
         steps = read_steps(data)
         variants = read_variants(data)
         images = find_images(file_path)
-        return Recipe(quantities=quantities, ingredients=ingredients, steps=steps, variants=variants, images=images)
+        return Recipe(servings=servings, ingredients=ingredients, steps=steps, variants=variants, images=images)
     except Exception as e:
         raise YumlException(f'Encountered error while reading {file_path}.') from e

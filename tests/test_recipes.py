@@ -25,7 +25,7 @@ from yaml.parser import ParserError
 def test_reference_recipe():
     recipe = yuml.recipe_from_file('data/Chili con Carne.yuml')
 
-    assert len(recipe.quantities) == 1
+    assert len(recipe.servings) == 1
     assert len(recipe.ingredients) == 11
     assert len(recipe.steps) == 11
     assert len(recipe.variants) == 2

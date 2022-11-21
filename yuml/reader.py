@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from typing import Any, List
-from yuml.models import Quantity, Ingredient, Step, Variant
+from yuml.models import Serving, Ingredient, Step, Variant
 
 
 def read(data: dict, key: str) -> Any:
@@ -29,9 +29,9 @@ def read(data: dict, key: str) -> Any:
     raise Exception(f"Missing or empty property for key '{key}' ...")
 
 
-def read_quantities(data: dict) -> List[Quantity]:
-    quantities_data = read(data, 'quantities')
-    return [Quantity(text=text) for text in quantities_data]
+def read_servings(data: dict) -> List[Serving]:
+    servings_data = read(data, 'servings')
+    return [Serving(text=text) for text in servings_data]
 
 
 def read_ingredients(data: dict) -> List[Ingredient]:
