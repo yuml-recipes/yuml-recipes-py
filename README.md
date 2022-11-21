@@ -2,6 +2,22 @@
 
 This is the Python library for Yuml Recipes. It reads *.yuml files and collects all recipe information. Images that are located in the same directory and use the same base name are associated with the respective *.yuml recipe.
 
+## Example
+
+```yaml
+servings:
+    - Enough for everyone
+ingredients:
+    - Mix of vegetables: 800g
+    - Salt and pepper:
+steps:
+    - Cut everything in pieces
+    - Fry everything in a pan for 10 minutes
+    - Season with salt and pepper
+variants:
+    - Add strips of chicken breast to the mix
+```
+
 ## Usage
 
 ```python

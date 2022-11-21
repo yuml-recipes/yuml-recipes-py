@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='yuml-recipes',
+    name='yumlrecipes',
     packages=find_packages(include=['yuml']),
     version='0.1.0',
     description='Yuml Recipes Python Library',
