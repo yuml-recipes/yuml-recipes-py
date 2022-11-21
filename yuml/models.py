@@ -44,6 +44,7 @@ class Variant:
 
 @dataclass
 class Recipe:
+    name: str
     servings: List[Serving]
     ingredients: List[Ingredient]
     steps: List[Step]

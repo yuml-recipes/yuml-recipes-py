@@ -4,6 +4,8 @@ This is the Python library for Yuml Recipes. It reads *.yuml files and collects 
 
 ## Example
 
+Fried Vegetables.yuml:
+
 ```yaml
 servings:
     - Enough for everyone
@@ -24,7 +26,8 @@ variants:
 import yuml
 from typing import List
 
-recipe: yuml.Recipe = yuml.recipe_from_file('my_recipe.yuml')
+recipe: yuml.Recipe = yuml.recipe_from_file('Fried Vegetables.yuml')
+name: str = recipe.name
 servings: List[yuml.Serving] = recipe.servings
 ingredients: List[yuml.Ingredient] = recipe.ingredients
 steps: List[yuml.Step] = recipe.steps
