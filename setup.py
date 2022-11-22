@@ -7,5 +7,5 @@ setup(
     description='Yuml Recipes Python Library',
     author='Patrick Eschenbach',
     license='GPL-3.0',
-    install_requires=['yaml'],
+    install_requires=['pyyaml'],
 )
