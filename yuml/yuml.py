@@ -44,7 +44,7 @@ def recipe_from_file(file_path: str) -> Recipe:
         name = get_recipe_name(file_path)
         data = read_yuml(file_path)
         servings = read_servings(data)
-        ingredients = read_ingredients(data)
+        ingredients = read_ingredients(data, servings)
         steps = read_steps(data)
         variants = read_variants(data)
         images = find_images(file_path)

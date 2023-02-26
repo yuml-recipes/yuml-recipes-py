@@ -27,20 +27,60 @@ def test_reference_recipe():
 
     assert recipe.name == 'Chili con Carne'
 
-    assert len(recipe.servings) == 1
-    assert len(recipe.ingredients) == 11
-    assert len(recipe.steps) == 11
-    assert len(recipe.variants) == 2
+    assert len(recipe.servings) == 3
+    assert len(recipe.ingredients) == 6
+    assert len(recipe.steps) == 6
+    assert len(recipe.variants) == 3
     assert len(recipe.images) == 1
 
-    assert recipe.ingredients[1].text == 'Rote Chilischoten'
-    assert recipe.ingredients[1].quantity == '2 große'
+    serving0 = recipe.servings[0]
+    serving1 = recipe.servings[1]
+    serving2 = recipe.servings[2]
+    assert serving0.text == 'Menge für einen kleinen Topf'
+    assert serving1.text == 'Menge für einen mittleren Topf'
+    assert serving2.text == ''
 
-    assert recipe.ingredients[5].text == 'Tomaten'
-    assert recipe.ingredients[5].quantity == '3 Dosen (400g Füllmenge)'
+    ingredient0 = recipe.ingredients[0]
+    assert ingredient0.text == 'Hackfleisch vom Rind'
+    assert ingredient0.get_quantity_for_serving(serving0) == '200g'
+    assert ingredient0.get_quantity_for_serving(serving1) == '400g'
+    assert ingredient0.get_quantity_for_serving(serving2) == '600g'
 
-    assert recipe.ingredients[10].text == 'Salz und Pfeffer'
-    assert recipe.ingredients[10].quantity is None
+    ingredient1 = recipe.ingredients[1]
+    assert ingredient1.text == 'Zwiebeln'
+    assert ingredient1.get_quantity_for_serving(serving0) == 'Eine Große'
+    assert ingredient1.get_quantity_for_serving(serving1) == 'Zwei Große'
+    assert ingredient1.get_quantity_for_serving(serving2) == 'Missing quantity!'
+
+    ingredient2 = recipe.ingredients[2]
+    assert ingredient2.text == 'Tomaten'
+    assert ingredient2.get_quantity_for_serving(serving0) == '3 Dosen (400g Füllmenge)'
+    assert ingredient2.get_quantity_for_serving(serving1) == '3 Dosen (400g Füllmenge)'
+    assert ingredient2.get_quantity_for_serving(serving2) == '3 Dosen (400g Füllmenge)'
+
+    ingredient3 = recipe.ingredients[3]
+    assert ingredient3.text == 'Zimtstange'
+    assert ingredient3.get_quantity_for_serving(serving0) == ''
+    assert ingredient3.get_quantity_for_serving(serving1) == ''
+    assert ingredient3.get_quantity_for_serving(serving2) == ''
+
+    ingredient4 = recipe.ingredients[4]
+    assert ingredient4.text == 'Salz und Pfeffer'
+    assert ingredient4.get_quantity_for_serving(serving0) == ''
+    assert ingredient4.get_quantity_for_serving(serving1) == ''
+    assert ingredient4.get_quantity_for_serving(serving2) == ''
+
+    ingredient5 = recipe.ingredients[5]
+    assert ingredient5.text == ''
+    assert ingredient5.get_quantity_for_serving(serving0) == ''
+    assert ingredient5.get_quantity_for_serving(serving1) == ''
+    assert ingredient5.get_quantity_for_serving(serving2) == ''
+
+    assert recipe.steps[1].text == 'Zwiebeln, Knoblauch und Paprika ca. 5min im Öl anschwitzen'
+    assert recipe.steps[5].text == ''
+
+    assert recipe.variants[1].text == 'Eine Dose weiße Bohnen anstatt Kidneybohnen verwenden.'
+    assert recipe.variants[2].text == ''
 
     assert recipe.images[0] == 'data/Chili con Carne.png'
 
@@ -61,7 +101,7 @@ def test_missing_section_recipe():
 
 def test_minimal_recipe():
     recipe = yuml.recipe_from_file('data/minimal.yuml')
-    assert len(recipe.servings) == 0
+    assert len(recipe.servings) == 1
     assert len(recipe.ingredients) == 1
     assert len(recipe.steps) == 0
     assert len(recipe.variants) == 0

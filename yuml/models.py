@@ -18,18 +18,22 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 
 
 @dataclass
 class Serving:
+    index: int
     text: str
 
 
 @dataclass
 class Ingredient:
     text: str
-    quantity: List[str]
+    quantities: Dict[Serving, str]
+
+    def get_quantity_for_serving(self, serving: Serving) -> str:
+        return self.quantities[serving.index]
 
 
 @dataclass

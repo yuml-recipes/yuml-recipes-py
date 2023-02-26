@@ -17,35 +17,65 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, List
+from typing import Any, List, Dict
 from yuml.models import Serving, Ingredient, Step, Variant
 
 
-def read(data: dict, key: str, default: Any = None) -> Any:
+def __read(data: dict, key: str, default: Any = None) -> Any:
     value = data.get(key, default)
     if value is not None:
         return value
     raise Exception(f"Missing or empty property for key '{key}' ...")
 
 
+def __ensure_str(input: str) -> str:
+    return str(input) if input else ''
+
+
 def read_servings(data: dict) -> List[Serving]:
-    servings_data = read(data, 'servings', [])
-    return [Serving(text=text) for text in servings_data]
+    servings_data = __read(data, 'servings', [])
+    if len(servings_data) > 0:
+        return [Serving(index=index, text=__ensure_str(text)) for index, text in enumerate(servings_data)]
+    else:
+        return [Serving(index=0, text='')]
 
 
-def read_ingredients(data: dict) -> List[Ingredient]:
-    ingredients_data = read(data, 'ingredients')
+def __determine_ingredient_text(entry: Any) -> str:
+    if isinstance(entry, dict):
+        for text, _ in entry.items():
+            return __ensure_str(text)
+    else:
+        return __ensure_str(entry)
+
+
+def __determine_ingredient_quantity(entry: Any, index: int) -> str:
+    if isinstance(entry, dict):
+        for _, quantity in entry.items():
+            if isinstance(quantity, list):
+                return quantity[index] if index < len(quantity) else 'Missing quantity!'
+            else:
+                return __ensure_str(quantity)
+    else:
+        return ''
+
+
+def read_ingredients(data: dict, servings: List[Serving]) -> List[Ingredient]:
+    ingredients_data = __read(data, 'ingredients')
     ingredients = []
     for entry in ingredients_data:
-        ingredients.extend([Ingredient(text=text, quantity=quantity) for text, quantity in entry.items()])
+        text = __determine_ingredient_text(entry)
+        quantities: Dict[Serving, str] = dict()
+        for serving in servings:
+            quantities[serving.index] = __determine_ingredient_quantity(entry, serving.index)
+        ingredients.append(Ingredient(text=text, quantities=quantities))
     return ingredients
 
 
 def read_steps(data: dict) -> List[Step]:
-    steps_data = read(data, 'steps', [])
-    return [Step(text=text) for text in steps_data]
+    steps_data = __read(data, 'steps', [])
+    return [Step(text=__ensure_str(text)) for text in steps_data]
 
 
 def read_variants(data: dict) -> List[Variant]:
-    variants_data = read(data, 'variants', [])
-    return [Variant(text=text) for text in variants_data]
+    variants_data = __read(data, 'variants', [])
+    return [Variant(text=__ensure_str(text)) for text in variants_data]
