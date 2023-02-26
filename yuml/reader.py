@@ -21,16 +21,15 @@ from typing import Any, List
 from yuml.models import Serving, Ingredient, Step, Variant
 
 
-def read(data: dict, key: str) -> Any:
-    if key in data:
-        value = data.get(key)
-        if value:
-            return value
+def read(data: dict, key: str, default: Any = None) -> Any:
+    value = data.get(key, default)
+    if value is not None:
+        return value
     raise Exception(f"Missing or empty property for key '{key}' ...")
 
 
 def read_servings(data: dict) -> List[Serving]:
-    servings_data = read(data, 'servings')
+    servings_data = read(data, 'servings', [])
     return [Serving(text=text) for text in servings_data]
 
 
@@ -43,10 +42,10 @@ def read_ingredients(data: dict) -> List[Ingredient]:
 
 
 def read_steps(data: dict) -> List[Step]:
-    steps_data = read(data, 'steps')
+    steps_data = read(data, 'steps', [])
     return [Step(text=text) for text in steps_data]
 
 
 def read_variants(data: dict) -> List[Variant]:
-    variants_data = read(data, 'variants')
+    variants_data = read(data, 'variants', [])
     return [Variant(text=text) for text in variants_data]

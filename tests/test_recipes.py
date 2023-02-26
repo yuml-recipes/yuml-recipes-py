@@ -42,6 +42,8 @@ def test_reference_recipe():
     assert recipe.ingredients[10].text == 'Salz und Pfeffer'
     assert recipe.ingredients[10].quantity is None
 
+    assert recipe.images[0] == 'data/Chili con Carne.png'
+
 
 def test_syntax_exception_recipe():
     with pytest.raises(yuml.YumlException) as exc_info:
@@ -55,3 +57,12 @@ def test_missing_section_recipe():
         _ = yuml.recipe_from_file('data/missing_ingredients.yuml')
     exception_raised = exc_info.value
     assert str(exception_raised.__cause__) == "Missing or empty property for key 'ingredients' ..."
+
+
+def test_minimal_recipe():
+    recipe = yuml.recipe_from_file('data/minimal.yuml')
+    assert len(recipe.servings) == 0
+    assert len(recipe.ingredients) == 1
+    assert len(recipe.steps) == 0
+    assert len(recipe.variants) == 0
+    assert len(recipe.images) == 0

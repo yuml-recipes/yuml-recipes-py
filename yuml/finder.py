@@ -36,4 +36,4 @@ def find_images(file_path: str) -> List[str]:
     recipe_name, _ = os.path.splitext(os.path.basename(file_path))
     dir_path = os.path.dirname(file_path)
     children = os.listdir(dir_path)
-    return [child for child in children if is_file(dir_path, child) and has_matching_name(recipe_name, child)]
+    return [os.path.join(dir_path, child) for child in children if is_file(dir_path, child) and has_matching_name(recipe_name, child)]

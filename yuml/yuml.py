@@ -49,5 +49,5 @@ def recipe_from_file(file_path: str) -> Recipe:
         variants = read_variants(data)
         images = find_images(file_path)
         return Recipe(name=name, servings=servings, ingredients=ingredients, steps=steps, variants=variants, images=images)
-    except Exception as e:
-        raise YumlException(f'Encountered error while reading {file_path}.') from e
+    except Exception as ex:
+        raise YumlException(f'Encountered error while reading {file_path}: {str(ex)}') from ex
