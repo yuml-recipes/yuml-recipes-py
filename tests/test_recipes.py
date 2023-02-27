@@ -42,39 +42,39 @@ def test_reference_recipe():
 
     ingredient0 = recipe.ingredients[0]
     assert ingredient0.text == 'Hackfleisch vom Rind'
-    assert ingredient0.get_quantity_for_serving(serving0) == '200g'
-    assert ingredient0.get_quantity_for_serving(serving1) == '400g'
-    assert ingredient0.get_quantity_for_serving(serving2) == '600g'
+    assert ingredient0.quantities[serving0.index] == '200g'
+    assert ingredient0.quantities[serving1.index] == '400g'
+    assert ingredient0.quantities[serving2.index] == '600g'
 
     ingredient1 = recipe.ingredients[1]
     assert ingredient1.text == 'Zwiebeln'
-    assert ingredient1.get_quantity_for_serving(serving0) == 'Eine Große'
-    assert ingredient1.get_quantity_for_serving(serving1) == 'Zwei Große'
-    assert ingredient1.get_quantity_for_serving(serving2) == 'Missing quantity!'
+    assert ingredient1.quantities[serving0.index] == 'Eine Große'
+    assert ingredient1.quantities[serving1.index] == 'Zwei Große'
+    assert ingredient1.quantities[serving2.index] == 'Missing quantity!'
 
     ingredient2 = recipe.ingredients[2]
     assert ingredient2.text == 'Tomaten'
-    assert ingredient2.get_quantity_for_serving(serving0) == '3 Dosen (400g Füllmenge)'
-    assert ingredient2.get_quantity_for_serving(serving1) == '3 Dosen (400g Füllmenge)'
-    assert ingredient2.get_quantity_for_serving(serving2) == '3 Dosen (400g Füllmenge)'
+    assert ingredient2.quantities[serving0.index] == '3 Dosen (400g Füllmenge)'
+    assert ingredient2.quantities[serving1.index] == '3 Dosen (400g Füllmenge)'
+    assert ingredient2.quantities[serving2.index] == '3 Dosen (400g Füllmenge)'
 
     ingredient3 = recipe.ingredients[3]
     assert ingredient3.text == 'Zimtstange'
-    assert ingredient3.get_quantity_for_serving(serving0) == ''
-    assert ingredient3.get_quantity_for_serving(serving1) == ''
-    assert ingredient3.get_quantity_for_serving(serving2) == ''
+    assert ingredient3.quantities[serving0.index] == ''
+    assert ingredient3.quantities[serving1.index] == ''
+    assert ingredient3.quantities[serving2.index] == ''
 
     ingredient4 = recipe.ingredients[4]
     assert ingredient4.text == 'Salz und Pfeffer'
-    assert ingredient4.get_quantity_for_serving(serving0) == ''
-    assert ingredient4.get_quantity_for_serving(serving1) == ''
-    assert ingredient4.get_quantity_for_serving(serving2) == ''
+    assert ingredient4.quantities[serving0.index] == ''
+    assert ingredient4.quantities[serving1.index] == ''
+    assert ingredient4.quantities[serving2.index] == ''
 
     ingredient5 = recipe.ingredients[5]
     assert ingredient5.text == ''
-    assert ingredient5.get_quantity_for_serving(serving0) == ''
-    assert ingredient5.get_quantity_for_serving(serving1) == ''
-    assert ingredient5.get_quantity_for_serving(serving2) == ''
+    assert ingredient5.quantities[serving0.index] == ''
+    assert ingredient5.quantities[serving1.index] == ''
+    assert ingredient5.quantities[serving2.index] == ''
 
     assert recipe.steps[1].text == 'Zwiebeln, Knoblauch und Paprika ca. 5min im Öl anschwitzen'
     assert recipe.steps[5].text == ''

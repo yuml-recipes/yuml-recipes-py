@@ -62,20 +62,20 @@ def __determine_ingredient_quantity(entry: Any, index: int) -> str:
 def read_ingredients(data: dict, servings: List[Serving]) -> List[Ingredient]:
     ingredients_data = __read(data, 'ingredients')
     ingredients = []
-    for entry in ingredients_data:
+    for index, entry in enumerate(ingredients_data):
         text = __determine_ingredient_text(entry)
         quantities: Dict[Serving, str] = dict()
         for serving in servings:
             quantities[serving.index] = __determine_ingredient_quantity(entry, serving.index)
-        ingredients.append(Ingredient(text=text, quantities=quantities))
+        ingredients.append(Ingredient(index=index, text=text, quantities=quantities))
     return ingredients
 
 
 def read_steps(data: dict) -> List[Step]:
     steps_data = __read(data, 'steps', [])
-    return [Step(text=__ensure_str(text)) for text in steps_data]
+    return [Step(index=index, text=__ensure_str(text)) for index, text in enumerate(steps_data)]
 
 
 def read_variants(data: dict) -> List[Variant]:
     variants_data = __read(data, 'variants', [])
-    return [Variant(text=__ensure_str(text)) for text in variants_data]
+    return [Variant(index=index, text=__ensure_str(text)) for index, text in enumerate(variants_data)]

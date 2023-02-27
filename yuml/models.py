@@ -29,20 +29,20 @@ class Serving:
 
 @dataclass
 class Ingredient:
+    index: int
     text: str
-    quantities: Dict[Serving, str]
-
-    def get_quantity_for_serving(self, serving: Serving) -> str:
-        return self.quantities[serving.index]
+    quantities: Dict[int, str]
 
 
 @dataclass
 class Step:
+    index: int
     text: str
 
 
 @dataclass
 class Variant:
+    index: int
     text: str
 
 
