@@ -38,11 +38,17 @@ images: List[str] = recipe.images
 ## Setup
 
 1. Initialize the Python virtual environment
-   * Run './venv.sh' to initialize the virtual environment
-   * Run 'source venv.bat' to activate the virtual environment in a shell
+   * Run `./venv.sh` to initialize the virtual environment
+   * Run `source venv.bat` to activate the virtual environment in a shell
    * Use an IDE that can activate the existing virtual environment for you
-1. Run 'pytest' from a shell with the virtual environment activated
-1. Run './build.sh' to lint, test and create a package
+1. Run `pytest` from a shell with the virtual environment activated
+1. Run `./build.sh` to lint, test and create a package
+
+## Release
+
+1. Run `./build.sh` to create `yumlrecipes-[version]-py3-none-any.whl`
+1. Upload and add package to GitHub release
+1. Get checksum with `sha256sum yumlrecipes-[version]-py3-none-any.whl`
 
 ## License
 
