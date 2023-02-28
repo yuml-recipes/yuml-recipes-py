@@ -1,5 +1,7 @@
 # Yuml Recipes Python Library
 
+![build_workflow_badge](https://github.com/yuml-recipes/yuml-recipes-py/actions/workflows/build.yaml/badge.svg)
+
 This is the Python library for Yuml Recipes. It reads *.yuml files and collects all recipe information. Images that are located in the same directory and use the same base name are associated with the respective *.yuml recipe.
 
 ## Example
