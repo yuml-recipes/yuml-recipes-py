@@ -29,12 +29,12 @@ import yuml
 from typing import List
 
 recipe: yuml.Recipe = yuml.recipe_from_file('Fried Vegetables.yuml')
-name: str = recipe.name
-servings: List[yuml.Serving] = recipe.servings
+name:        str                   = recipe.name
+images:      List[str]             = recipe.images
+servings:    List[yuml.Serving]    = recipe.servings
 ingredients: List[yuml.Ingredient] = recipe.ingredients
-steps: List[yuml.Step] = recipe.steps
-variants: List[yuml.Variant] = recipe.variants
-images: List[str] = recipe.images
+steps:       List[yuml.Step]       = recipe.steps
+variants:    List[yuml.Variant]    = recipe.variants
 ```
 
 ## Setup
@@ -58,4 +58,4 @@ GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
 GPL-3.0
 
-Copyright (c) 2022 Patrick Eschenbach
+Copyright (c) 2023 Patrick Eschenbach
